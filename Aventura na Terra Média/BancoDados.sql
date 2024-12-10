@@ -62,24 +62,42 @@ INSERT INTO coletados (id_coletado,id_personagem, id_item, id_cenario) VALUES
 
 --BUSCAS DE JUNÇÕES NA TERRA MÉDIA
 select *from coletados
---encontrar os itens coletados por aragorn
 
+--encontrar os itens coletados por aragorn
 select coletados.id_item , nome_item
 from coletados, itens
 where coletados.id_item = itens.id_item and id_personagem= 1
 
 -- descobrir os cenarios que Legolas visitou
-
 select coletados.id_cenario, nome_cenario
 from coletados, cenarios
 where coletados.id_cenario = cenarios.id_cenario and id_personagem = 2
 
 -- verificar os itens coletados por gimli no campo de batalha de helm
-
-select coletados.id_item, nome, nome_cenario
-from coletados, personagens, cenarios
-where coletados.id_item = personagens.id_item and coletados.id_item = cenarios.id_item 
-
+select  coletados.id_item, itens.nome_item
+from coletados, itens, cenarios
+where coletados.id_item = itens.id_item and coletados.id_cenario = cenarios.id_cenario and cenarios.id_cenario = 3 and id_personagem = 3
 
 -- INNER JOIN
 
+-- encontrar os itens coletados por Aragorn
+select coletados.id_item, nome_item
+from coletados
+join itens
+on coletados.id_item = itens.id_item and id_personagem = 1
+
+-- descobrir os cenarios que Legolas visitou
+select coletados.id_cenario, nome_cenario
+from coletados
+join cenarios
+on coletados.id_cenario = cenarios.id_cenario
+where id_personagem = 2
+
+-- verificar os itens coletados por gimli no campo de batalha de helm
+select coletados.id_item, itens.nome_item
+from coletados
+join itens
+on coletados.id_item = itens.id_item 
+join cenarios
+on coletados.id_cenario = cenarios.id_cenario
+where id_personagem = 3 and cenarios.id_cenario = 3
